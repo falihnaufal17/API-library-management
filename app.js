@@ -18,6 +18,16 @@ app.listen(port, () => {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
+app.get('/:bookid', (req, res) => {
+    const bookid = req.params.bookid;
+
+    connection.query('SELECT * FROM book WHERE bookid = ?', bookid, (err, result) => {
+        if (err) console.log(err);
+
+        res.json(result);
+    })
+})
+
 app.get('/', (req, res) => {
     const search = req.query.search;
     connection.query(`SELECT * FROM book WHERE category LIKE '%${search}%' OR location LIKE '%${search}%'`, (err, result) => {

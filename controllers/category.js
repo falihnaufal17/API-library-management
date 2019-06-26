@@ -29,6 +29,7 @@ exports.addCategory = (req, res) => {
 
         res.send({
             message: 'Data saved successfully',
+            status: 201,
             data: result
         })
     })
@@ -46,6 +47,7 @@ exports.updateCategory = (req, res) => {
 
         res.send({
             message: 'Data updated successfully',
+            status: 200,
             data: result
         })
     })

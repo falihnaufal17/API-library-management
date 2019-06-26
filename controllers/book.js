@@ -35,7 +35,7 @@ exports.addBook = (req, res) => {
 
         res.send({
             message: 'Data saved successfully',
-            status: 200,
+            status: 201,
             data: result
         })
     })

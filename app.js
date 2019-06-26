@@ -1,17 +1,20 @@
+require('dotenv/config');
+
 const express = require('express');
 const bodyParser = require('body-parser');
-const bookRoutes = require('./routes/book');
-const categoryRoutes = require('./routes/category');
 const app = express();
 const port = process.env.SERVER_PORT || 1700;
+
+const bookRoute = require('./src/routes/bookRoute')
+const catRoute = require('./src/routes/categoryRoute')
+
+app.listen(port, () => {
+    console.log(`Server started with port: ${port}`)
+});
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // Routes
-app.use('/book', bookRoutes);
-app.use('/category', categoryRoutes);
-
-app.listen(port, () => {
-    console.log(`Server started with port: ${port}`)
-});
+app.use('/books', bookRoute)
+app.use('/category', catRoute)

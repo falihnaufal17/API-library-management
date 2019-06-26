@@ -14,6 +14,18 @@ module.exports = {
         })
     },
 
+    findBooks: (req, res) => {
+        const search = req.query.search || '';
+        bookModel.findBooks(search)
+            .then((resultBook) => {
+                const result = resultBook
+                miscHelper.response(res, result, 200)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    },
+
     bookDetail: (req, res) => {
         const bookid = req.params.bookid;
 

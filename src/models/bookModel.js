@@ -9,6 +9,18 @@ module.exports = {
         })
     },
 
+    findBooks: (search) => {
+        return new Promise((resolve, reject) => {
+            connection.query(`SELECT book.bookid, book.name, book.writer, book.location, category.category, book.created_at, book.updated_at FROM book INNER JOIN category ON book.categoryid = category.categoryid WHERE category LIKE '%${search}%' OR location LIKE '%${search}%'`, (err, result) => {
+                if (!err) {
+                    resolve(result)
+                } else {
+                    reject(new Error(err))
+                }
+            })
+        })
+    },
+
     bookDetail: (bookid) => {
         return new Promise((resolve, reject) => {
             connection.query('SELECT book.bookid, book.name, book.writer, book.location, category.category, book.created_at, book.updated_at FROM book INNER JOIN category ON book.categoryid = category.categoryid WHERE bookid = ?', bookid, (err, result) => {
@@ -55,5 +67,5 @@ module.exports = {
                 }
             })
         })
-    }
+    },
 }

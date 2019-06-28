@@ -16,5 +16,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
 // Routes
+app.get('/', (req, res) => {
+    res.send('Welcome to library!')
+})
 app.use('/books', bookRoute)
 app.use('/category', catRoute)

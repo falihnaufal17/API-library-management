@@ -2,9 +2,6 @@ const bookModel = require('../models/bookModel')
 const miscHelper = require('../helpers/helpers')
 
 module.exports = {
-    getIndex: (req, res) => {
-        return res.json({ message: 'Book Manager Library' })
-    },
 
     getBooks: (req, res) => {
         bookModel.getBooks((err, result) => {

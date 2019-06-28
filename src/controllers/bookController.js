@@ -16,7 +16,12 @@ module.exports = {
         bookModel.findBooks(search)
             .then((resultBook) => {
                 const result = resultBook
-                miscHelper.response(res, result, 200)
+
+                if (result[0]) {
+                    miscHelper.response(res, result, 200)
+                } else {
+                    miscHelper.response(res, 'null', 404, 'tidak ada data yang seperti itu')
+                }
             })
             .catch((error) => {
                 console.log(error)
@@ -28,8 +33,13 @@ module.exports = {
 
         bookModel.bookDetail(bookid)
             .then((resultBook) => {
-                const result = resultBook[0]
-                miscHelper.response(res, result, 200)
+
+                if (resultBook[0]) {
+                    const result = resultBook[0]
+                    miscHelper.response(res, result, 200)
+                } else {
+                    miscHelper.response(res, 'null', 404, 'no data found')
+                }
             })
             .catch((error) => {
                 console.log(error);

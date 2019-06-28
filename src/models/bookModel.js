@@ -2,7 +2,7 @@ const connection = require('../configs/db');
 
 module.exports = {
     getBooks: (callback) => {
-        connection.query('SELECT book.bookid, book.name, book.writer, book.location, category.category, book.created_at, book.updated_at FROM book INNER JOIN category ON book.categoryid = category.categoryid', (err, result) => {
+        connection.query('SELECT book.bookid, book.name, book.writer, book.location,category.category, book.created_at, book.updated_at FROM book INNER JOIN category ON book.categoryid = category.categoryid', (err, result) => {
             if (err) console.error(err)
 
             callback(err, result);

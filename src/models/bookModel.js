@@ -17,7 +17,7 @@ module.exports = {
     findBooks: (search) => {
         return new Promise((resolve, reject) => {
             const cari = `%${search}%`
-            connection.query('SELECT book.bookid, book.title, book.writer, book.image, book.description, location.location, category.category, status.status, book.created_at, book.updated_at FROM book INNER JOIN location ON book.locationid = location.locationid INNER JOIN category ON book.categoryid = category.categoryid INNER JOIN status ON book.statusid = status.statusid WHERE category LIKE ? OR name LIKE ? OR location LIKE ?', [cari, cari, cari], (err, result) => {
+            connection.query('SELECT book.bookid, book.title, book.writer, book.image, book.description, location.location, category.category, status.status, book.created_at, book.updated_at FROM book INNER JOIN location ON book.locationid = location.locationid INNER JOIN category ON book.categoryid = category.categoryid INNER JOIN status ON book.statusid = status.statusid WHERE category LIKE ? OR title LIKE ? OR location LIKE ?', [cari, cari, cari], (err, result) => {
                 if (!err) {
                     resolve(result)
                 } else {

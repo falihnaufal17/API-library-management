@@ -56,7 +56,7 @@ module.exports = {
 
     addBook: (req, res) => {
         const data = {
-            name: req.body.name,
+            title: req.body.title,
             writer: req.body.writer,
             image: req.body.image,
             description: req.body.description,
@@ -93,7 +93,7 @@ module.exports = {
     updateBook: (req, res) => {
         const bookid = req.params.bookid;
         const data = {
-            name: req.body.name,
+            title: req.body.title,
             writer: req.body.writer,
             image: req.body.image,
             description: req.body.description,

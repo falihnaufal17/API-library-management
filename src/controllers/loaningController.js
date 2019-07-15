@@ -59,7 +59,7 @@ module.exports = {
 
         loaningModel.deleteLoaning(loaningid)
             .then((resultLoaning) => {
-                const result = resultLoaning[0]
+                const result = resultLoaning
 
                 if (result) {
                     miscHelper.response(res, result, 200)

@@ -3,7 +3,7 @@ require('dotenv/config');
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
-const path = require('path');
+const cors = require('cors')
 const port = process.env.SERVER_PORT || 1700;
 
 const bookRoute = require('./src/routes/bookRoute')
@@ -14,6 +14,8 @@ const loaningRoute = require('./src/routes/loaningRoute')
 app.listen(port, () => {
     console.log(`Server started with port: ${port}`)
 });
+
+app.use(cors())
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));

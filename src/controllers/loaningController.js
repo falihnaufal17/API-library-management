@@ -37,11 +37,13 @@ module.exports = {
     },
 
     addLoaning: (req, res) => {
+        let expired_date = new Date()
+        expired_date.setDate(expired_date.getDate() + 5)
         const data = {
             bookid: req.body.bookid,
             id_card: req.body.id_card,
             name: req.body.name,
-            expired_date: req.body.expired_date,
+            expired_date: expired_date,
             created_at: new Date(),
             updated_at: new Date()
         }
@@ -71,16 +73,13 @@ module.exports = {
     },
 
     updateLoaning: (req, res) => {
-        const loaningid = req.params.loaningid
+        const bookid = req.params.bookid
         const data = {
             bookid: req.body.bookid,
-            id_card: req.body.id_card,
-            name: req.body.name,
-            expired_date: req.body.expired_date,
             updated_at: new Date()
         }
 
-        loaningModel.updateLoaning(loaningid, data)
+        loaningModel.updateLoaning(bookid, data)
             .then(() => {
                 miscHelper.response(res, data, 200)
             })

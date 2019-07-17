@@ -34,6 +34,7 @@ module.exports = {
                     reject(new Error(err))
                 }
             })
+            connection.query('UPDATE book SET statusid = 1 WHERE bookid = ?', data.bookid)
         })
     },
 
@@ -58,6 +59,8 @@ module.exports = {
                     reject(new Error(err))
                 }
             })
+
+            connection.query('UPDATE book SET statusid = 2 WHERE bookid = ?', data.bookid)
         })
     }
 }

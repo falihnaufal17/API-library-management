@@ -1,4 +1,4 @@
-# Book Manager Library
+# Backend Library App
 ![](https://img.shields.io/badge/Code%20Style-Standard-yellow.svg)
 ![](https://img.shields.io/badge/Dependencies-Express-green.svg)
 ![](https://img.shields.io/badge/License-Beerware-yellowgreen.svg)
@@ -11,8 +11,8 @@
 ## Installation
 ### Clone
 ```
-$ git clone https://github.com/falihnaufal17/week-2-task
-$ cd week-2-task
+$ git clone https://github.com/falihnaufal17/API-library-management.git
+$ cd API-library-management
 $ npm install
 ```
 

@@ -73,13 +73,13 @@ module.exports = {
     },
 
     updateLoaning: (req, res) => {
-        const bookid = req.params.bookid
+        const loaningid = req.params.loaningid
         const data = {
             bookid: req.body.bookid,
             updated_at: new Date()
         }
 
-        loaningModel.updateLoaning(bookid, data)
+        loaningModel.updateLoaning(loaningid, data)
             .then(() => {
                 miscHelper.response(res, data, 200)
             })

@@ -44,6 +44,8 @@ module.exports = {
             id_card: req.body.id_card,
             name: req.body.name,
             expired_date: expired_date,
+            forfeit: 0,
+            isverify: "false",
             created_at: new Date(),
             updated_at: new Date()
         }
@@ -76,6 +78,8 @@ module.exports = {
         const loaningid = req.params.loaningid
         const data = {
             bookid: req.body.bookid,
+            forfeit: req.body.forfeit,
+            isverify: "true",
             updated_at: new Date()
         }
 

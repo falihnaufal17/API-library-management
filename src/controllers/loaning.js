@@ -1,4 +1,4 @@
-const loaningModel = require('../models/loaningModel')
+const loaningModel = require('../models/loaning')
 const miscHelper = require('../helpers/helpers')
 
 module.exports = {

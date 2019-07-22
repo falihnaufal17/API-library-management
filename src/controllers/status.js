@@ -1,4 +1,4 @@
-const statusModel = require('../models/statusModel')
+const statusModel = require('../models/status')
 const miscHelper = require('../helpers/helpers')
 
 module.exports = {

@@ -1,6 +1,6 @@
 const express = require('express')
 const Route = express.Router()
-const loaningController = require('../controllers/loaningController')
+const loaningController = require('../controllers/loaning')
 
 Route
     .get('/', loaningController.getLoaning)

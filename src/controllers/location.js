@@ -1,4 +1,4 @@
-const locationModel = require('../models/locationModel')
+const locationModel = require('../models/location')
 const miscHelper = require('../helpers/helpers')
 
 module.exports = {

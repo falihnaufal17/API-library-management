@@ -1,7 +1,7 @@
 const express = require('express')
 const Route = express.Router()
 
-const catController = require('../controllers/categoryController')
+const catController = require('../controllers/category')
 
 Route
     .get('/:categoryid', catController.categoryById)

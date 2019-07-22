@@ -1,4 +1,4 @@
-const catModel = require('../models/categoryModel')
+const catModel = require('../models/category')
 const miscHelper = require('../helpers/helpers')
 
 module.exports = {

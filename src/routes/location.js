@@ -1,7 +1,7 @@
 const express = require('express')
 const Route = express.Router()
 
-const locationController = require('../controllers/locationController')
+const locationController = require('../controllers/location')
 
 Route
     .get('/', locationController.getLocation)

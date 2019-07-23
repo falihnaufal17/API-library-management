@@ -12,6 +12,8 @@ module.exports = {
         userModels.getUsers()
             .then((resultUser) => {
                 const result = resultUser
+                delete result.salt
+                delete result.password
                 miscHelper.response(res, result, 200)
             })
             .catch((error) => {
@@ -25,6 +27,8 @@ module.exports = {
         userModels.detailUser(iduser)
             .then((resultUser) => {
                 const result = resultUser[0]
+                delete result.salt
+                delete result.password
                 miscHelper.response(res, result, 200)
             })
             .catch((error) => {

@@ -12,8 +12,10 @@ module.exports = {
         userModels.getUsers()
             .then((resultUser) => {
                 const result = resultUser
-                delete result.salt
-                delete result.password
+                resultUser.map((item) => {
+                    delete item.salt
+                    delete item.password
+                })
                 miscHelper.response(res, result, 200)
             })
             .catch((error) => {
@@ -46,8 +48,9 @@ module.exports = {
             email: req.body.email,
             password: passwordHash.passwordHash,
             salt: passwordHash.salt,
-            token: 'Test',
-            status: 1,
+            token: '',
+            status: 0,
+            idrole: req.body.idrole,
             created_at: new Date(),
             updated_at: new Date()
         }
@@ -73,15 +76,35 @@ module.exports = {
                 if (usePassword === dataUser.password) {
                     dataUser.token = jwt.sign({
                         iduser: dataUser.iduser
-                    }, process.env.SECRET_KEY, { expiresIn: '1h' })
-
+                    }, process.env.SECRET_KEY, { expiresIn: '30m' })
+                    const token = dataUser.token
                     delete dataUser.salt
                     delete dataUser.password
+
+                    userModels.updateToken(email, token)
+                        .then((resultToken) => {
+                            return miscHelper.response(res, resultToken, 200)
+                        })
+                        .catch((error) => {
+                            console.log(error)
+                        })
 
                     return miscHelper.response(res, dataUser, 200)
                 } else {
                     return miscHelper.response(res, null, 403, 'Wrong Password!')
                 }
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    },
+
+    logout: (req, res) => {
+        const iduser = req.params.iduser
+
+        userModels.logout(iduser)
+            .then(() => {
+                miscHelper.response(res, 'anda sudah logout', 200)
             })
             .catch((error) => {
                 console.log(error)

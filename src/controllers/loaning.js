@@ -18,6 +18,23 @@ module.exports = {
             })
     },
 
+    getLoanByUser: (req, res) => {
+        const iduser = req.params.iduser
+        loaningModel.getLoanByUser(iduser)
+            .then((resultLoaning) => {
+                const result = resultLoaning
+
+                if (result[0]) {
+                    miscHelper.response(res, result, 200)
+                } else {
+                    miscHelper.response(res, 'kamu belum meminjam buku', 404, 'data not found')
+                }
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    },
+
     detailLoaning: (req, res) => {
         const loaningid = req.params.loaningid
 
@@ -42,7 +59,6 @@ module.exports = {
         const data = {
             bookid: req.body.bookid,
             id_card: req.body.id_card,
-            name: req.body.name,
             expired_date: expired_date,
             forfeit: 0,
             isverify: "false",

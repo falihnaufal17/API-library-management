@@ -9,5 +9,6 @@ Route
     .get('/:iduser', Auth.authInfo, userController.userDetail)
     .post('/register', userController.register)
     .post('/login', userController.login)
+    .patch('/logout/:iduser', userController.logout)
 
 module.exports = Route

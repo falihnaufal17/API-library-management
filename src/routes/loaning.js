@@ -6,6 +6,7 @@ Route
     .get('/', loaningController.getLoaning)
     .post('/', loaningController.addLoaning)
     .get('/:loaningid', loaningController.detailLoaning)
+    .get('/users/:iduser', loaningController.getLoanByUser)
     .delete('/:loaningid', loaningController.deleteLoaning)
     .patch('/:loaningid', loaningController.updateLoaning)
 

@@ -3,7 +3,19 @@ const connection = require('../configs/db')
 module.exports = {
     getloaning: () => {
         return new Promise((resolve, reject) => {
-            connection.query('SELECT loaning.loaningid, book.bookid, book.title, loaning.id_card, loaning.name, loaning.expired_date, loaning.forfeit, loaning.isverify, loaning.created_at, loaning.updated_at FROM loaning INNER JOIN book ON loaning.bookid = book.bookid', (err, result) => {
+            connection.query('SELECT loaning.loaningid, book.bookid, book.title, user.id_card, user.name, loaning.expired_date, loaning.forfeit, loaning.isverify, loaning.created_at, loaning.updated_at FROM loaning INNER JOIN book ON loaning.bookid = book.bookid INNER JOIN user ON loaning.id_card = user.iduser', (err, result) => {
+                if (!err) {
+                    resolve(result)
+                } else {
+                    reject(new Error(err))
+                }
+            })
+        })
+    },
+
+    getLoanByUser: (iduser) => {
+        return new Promise((resolve, reject) => {
+            connection.query('SELECT loaning.loaningid, book.bookid, book.title, user.id_card, user.name, loaning.expired_date, loaning.forfeit, loaning.isverify, loaning.created_at, loaning.updated_at FROM loaning INNER JOIN book ON loaning.bookid = book.bookid INNER JOIN user ON loaning.id_card = user.iduser WHERE loaning.id_card = ?', iduser, (err, result) => {
                 if (!err) {
                     resolve(result)
                 } else {
@@ -15,7 +27,7 @@ module.exports = {
 
     detailLoaning: (loaningid) => {
         return new Promise((resolve, reject) => {
-            connection.query('SELECT loaning.loaningid, book.bookid, loaning.name, book.title, loaning.id_card, loaning.name, loaning.expired_date, loaning.forfeit, loaning.isverify, loaning.created_at, loaning.updated_at FROM loaning INNER JOIN book ON loaning.bookid = book.bookid WHERE loaningid = ?', loaningid, (err, result) => {
+            connection.query('SELECT loaning.loaningid, book.bookid, book.title, user.id_card, user.name, loaning.expired_date, loaning.forfeit, loaning.isverify, loaning.created_at, loaning.updated_at FROM loaning INNER JOIN book ON loaning.bookid = book.bookid INNER JOIN user ON loaning.id_card = user.iduser WHERE loaningid = ?', loaningid, (err, result) => {
                 if (!err) {
                     resolve(result)
                 } else {

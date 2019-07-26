@@ -3,6 +3,18 @@ const miscHelper = require('../helpers/helpers')
 
 module.exports = {
 
+    getBookByStatus: (req, res) => {
+        bookModel.getBookByStatus()
+            .then((resultBook) => {
+                const result = resultBook
+                if (result) {
+                    miscHelper.response(res, result, 200)
+                } else {
+                    miscHelper.response(res, 'Tidak ada buku yang tersedia', 404, 'not found')
+                }
+            })
+    },
+
     getBooks: (req, res) => {
         bookModel.getBooks()
             .then((resultBook) => {

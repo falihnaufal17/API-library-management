@@ -1,6 +1,19 @@
 const connection = require('../configs/db');
 
 module.exports = {
+
+    getBookByStatus: () => {
+        return new Promise((resolve, reject) => {
+            connection.query('SELECT * FROM book WHERE statusid = 2', (err, result) => {
+                if (!err) {
+                    resolve(result)
+                } else {
+                    reject(new Error(err))
+                }
+            })
+        })
+    },
+
     getBooks: () => {
         return new Promise((resolve, reject) => {
             connection.query('SELECT book.bookid, book.title, book.writer, book.image, book.description, location.location, category.category, status.status, book.created_at, book.updated_at FROM book INNER JOIN location ON book.locationid = location.locationid INNER JOIN category ON book.categoryid = category.categoryid INNER JOIN status ON book.statusid = status.statusid', (err, result) => {

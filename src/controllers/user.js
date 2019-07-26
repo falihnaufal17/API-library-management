@@ -51,6 +51,7 @@ module.exports = {
             token: '',
             status: 0,
             idrole: req.body.idrole,
+            isverify: 'false',
             created_at: new Date(),
             updated_at: new Date()
         }
@@ -60,6 +61,7 @@ module.exports = {
                 miscHelper.response(res, data, 201)
             })
             .catch((error) => {
+                miscHelper.response(res, 'Email sudah terdaftar!', 403)
                 console.log(error)
             })
     },
@@ -68,35 +70,40 @@ module.exports = {
         const email = req.body.email
         const password = req.body.password
 
-        userModels.getByEmail(email)
-            .then((result) => {
-                const dataUser = result[0]
-                const usePassword = miscHelper.setPassword(password, dataUser.salt).passwordHash
+        if (email === '' || password === '') {
+            miscHelper.response(res, 'email or password is empty!', 403, 'forbidden')
+        } else {
+            userModels.getByEmail(email)
 
-                if (usePassword === dataUser.password) {
-                    dataUser.token = jwt.sign({
-                        iduser: dataUser.iduser
-                    }, process.env.SECRET_KEY, { expiresIn: '30m' })
-                    const token = dataUser.token
-                    delete dataUser.salt
-                    delete dataUser.password
+                .then((result) => {
+                    const dataUser = result[0]
+                    const usePassword = miscHelper.setPassword(password, dataUser.salt).passwordHash
 
-                    userModels.updateToken(email, token)
-                        .then((resultToken) => {
-                            return miscHelper.response(res, resultToken, 200)
-                        })
-                        .catch((error) => {
-                            console.log(error)
-                        })
+                    if (usePassword === dataUser.password) {
+                        dataUser.token = jwt.sign({
+                            iduser: dataUser.iduser
+                        }, process.env.SECRET_KEY, { expiresIn: '30m' })
+                        const token = dataUser.token
+                        delete dataUser.salt
+                        delete dataUser.password
 
-                    return miscHelper.response(res, dataUser, 200)
-                } else {
-                    return miscHelper.response(res, null, 403, 'Wrong Password!')
-                }
-            })
-            .catch((error) => {
-                console.log(error)
-            })
+                        userModels.updateToken(email, token)
+                            .then((resultToken) => {
+                                return miscHelper.response(res, resultToken, 200)
+                            })
+                            .catch((error) => {
+                                console.log(error)
+                            })
+
+                        return miscHelper.response(res, dataUser, 200)
+                    } else {
+                        return miscHelper.response(res, null, 403, 'Wrong Password!')
+                    }
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
+        }
     },
 
     logout: (req, res) => {
@@ -105,6 +112,21 @@ module.exports = {
         userModels.logout(iduser)
             .then(() => {
                 miscHelper.response(res, 'anda sudah logout', 200)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    },
+
+    verifyUser: (req, res) => {
+        const iduser = req.params.iduser
+        const data = {
+            isverify: "true",
+            updated_at: new Date()
+        }
+        userModels.verifyUser(iduser, data)
+            .then(() => {
+                miscHelper.response(res, 'verifikasi berhasil', 200)
             })
             .catch((error) => {
                 console.log(error)

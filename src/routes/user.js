@@ -10,5 +10,6 @@ Route
     .post('/register', userController.register)
     .post('/login', userController.login)
     .patch('/logout/:iduser', userController.logout)
+    .patch('/verify/:iduser', userController.verifyUser)
 
 module.exports = Route

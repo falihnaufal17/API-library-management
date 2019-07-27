@@ -85,6 +85,7 @@ module.exports = {
                 miscHelper.response(res, data, 201)
             })
             .catch((error) => {
+                miscHelper.response(res, 'judul buku sudah ada!', 403, 'forbidden')
                 console.log(error)
             })
     },

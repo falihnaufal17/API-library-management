@@ -3,7 +3,7 @@ const Route = express.Router()
 const loaningController = require('../controllers/loaning')
 const Auth = require('../helpers/auth')
 Route
-    .all('/', Auth.authInfo)
+    .all('/*', Auth.authInfo)
     .get('/', Auth.accessToken, loaningController.getLoaning)
     .post('/', Auth.accessToken, loaningController.addLoaning)
     .get('/:loaningid', loaningController.detailLoaning)

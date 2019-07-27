@@ -5,7 +5,7 @@ const userController = require('../controllers/user')
 const Auth = require('../helpers/auth')
 
 Route
-    .all('/', Auth.authInfo)
+    .all('/*', Auth.authInfo)
     .get('/', Auth.accessToken, userController.getUsers)
     .get('/:iduser', Auth.accessToken, userController.userDetail)
     .post('/register', userController.register)

@@ -5,7 +5,7 @@ const bookController = require('../controllers/book')
 const Auth = require('../helpers/auth')
 
 Route
-    .all('/', Auth.authInfo)
+    .all('/*', Auth.authInfo)
     .get('/', bookController.findBooks, bookController.getBooks)
     .get('/bookstatus', bookController.getBookByStatus)
     .get('/:bookid', bookController.bookDetail)

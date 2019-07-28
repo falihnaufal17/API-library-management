@@ -14,9 +14,10 @@ module.exports = {
         })
     },
 
-    getBooks: () => {
+    getBooks: (limit, page) => {
+        let offset = (limit * page) - limit
         return new Promise((resolve, reject) => {
-            connection.query('SELECT book.bookid, book.title, book.writer, book.image, book.description, location.location, category.category, status.status, book.created_at, book.updated_at FROM book INNER JOIN location ON book.locationid = location.locationid INNER JOIN category ON book.categoryid = category.categoryid INNER JOIN status ON book.statusid = status.statusid', (err, result) => {
+            connection.query('SELECT book.bookid, book.title, book.writer, book.image, book.description, location.location, category.category, status.status, book.created_at, book.updated_at FROM book INNER JOIN location ON book.locationid = location.locationid INNER JOIN category ON book.categoryid = category.categoryid INNER JOIN status ON book.statusid = status.statusid LIMIT ? OFFSET ?', [limit, offset], (err, result) => {
                 if (!err) {
                     resolve(result)
                 } else {
@@ -27,10 +28,11 @@ module.exports = {
 
     },
 
-    findBooks: (search) => {
+    findBooks: (search, limit, page) => {
+        let offset = (limit * page) - limit
         return new Promise((resolve, reject) => {
             const cari = `%${search}%`
-            connection.query('SELECT book.bookid, book.title, book.writer, book.image, book.description, location.location, category.category, status.status, book.created_at, book.updated_at FROM book INNER JOIN location ON book.locationid = location.locationid INNER JOIN category ON book.categoryid = category.categoryid INNER JOIN status ON book.statusid = status.statusid WHERE category LIKE ? OR title LIKE ? OR location LIKE ?', [cari, cari, cari], (err, result) => {
+            connection.query('SELECT book.bookid, book.title, book.writer, book.image, book.description, location.location, category.category, status.status, book.created_at, book.updated_at FROM book INNER JOIN location ON book.locationid = location.locationid INNER JOIN category ON book.categoryid = category.categoryid INNER JOIN status ON book.statusid = status.statusid WHERE category LIKE ? OR title LIKE ? OR location LIKE ? LIMIT ? OFFSET ?', [cari, cari, cari, limit, offset], (err, result) => {
                 if (!err) {
                     resolve(result)
                 } else {

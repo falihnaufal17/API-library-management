@@ -16,7 +16,9 @@ module.exports = {
     },
 
     getBooks: (req, res) => {
-        bookModel.getBooks()
+        let limit = parseInt(req.query.limit) || 8
+        let page = parseInt(req.query.page) || 1
+        bookModel.getBooks(limit, page)
             .then((resultBook) => {
                 const result = resultBook
 
@@ -32,8 +34,10 @@ module.exports = {
     },
 
     findBooks: (req, res) => {
+        let limit = parseInt(req.query.limit) || 8
+        let page = parseInt(req.query.page) || 1
         const search = req.query.search || '';
-        bookModel.findBooks(search)
+        bookModel.findBooks(search, limit, page)
             .then((resultBook) => {
                 const result = resultBook
 

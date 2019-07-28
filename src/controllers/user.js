@@ -85,7 +85,7 @@ module.exports = {
                             name: dataUser.name,
                             email: dataUser.email,
                             status: dataUser.status,
-                            role: dataUser.idrole
+                            role: dataUser.namerole
                         }, process.env.SECRET_KEY, { expiresIn: '30m' })
                         const token = dataUser.token
                         delete dataUser.salt

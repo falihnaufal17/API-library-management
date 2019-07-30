@@ -33,7 +33,7 @@ app.listen(port, () => {
 //     }
 // }
 
-app.use(cors())
+// app.use(cors())
 // app.options('*', cors(corsOptions))
 app.use(xssFilter())
 app.use(logger('dev'))

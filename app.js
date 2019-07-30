@@ -19,22 +19,22 @@ app.listen(port, () => {
     console.log(`Server started with port: ${port}`)
 });
 
-const corsOptions = (req, callback) => {
-    if (whitelist.split('').indexOf(req.header('origin')) !== -1) {
-        console.log('success')
-        return callback(null, {
-            origin: true
-        })
-    } else {
-        console.log('Failed')
-        return callback(null, {
-            origin: false
-        })
-    }
-}
+// const corsOptions = (req, callback) => {
+//     if (whitelist.split('').indexOf(req.header('origin')) !== -1) {
+//         console.log('success')
+//         return callback(null, {
+//             origin: true
+//         })
+//     } else {
+//         console.log('Failed')
+//         return callback(null, {
+//             origin: false
+//         })
+//     }
+// }
 
 app.use(cors())
-app.options('*', cors(corsOptions))
+// app.options('*', cors(corsOptions))
 app.use(xssFilter())
 app.use(logger('dev'))
 

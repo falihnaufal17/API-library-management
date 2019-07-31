@@ -9,7 +9,7 @@ Route
     .get('/', bookController.findBooks, bookController.getBooks)
     .get('/bookstatus', bookController.getBookByStatus)
     .get('/:bookid', bookController.bookDetail)
-    .post('/', Auth.accessToken, bookController.addBook)
+    .post('/', bookController.addBook)
     .delete('/:bookid', Auth.accessToken, bookController.deleteBook)
     .patch('/:bookid', Auth.accessToken, bookController.updateBook)
 

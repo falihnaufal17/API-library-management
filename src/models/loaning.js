@@ -15,7 +15,7 @@ module.exports = {
 
     getLoanByUser: (iduser) => {
         return new Promise((resolve, reject) => {
-            connection.query('SELECT loaning.loaningid, book.bookid, book.title, user.id_card, user.name, loaning.expired_date, loaning.forfeit, loaning.isverify, loaning.created_at, loaning.updated_at FROM loaning INNER JOIN book ON loaning.bookid = book.bookid INNER JOIN user ON loaning.id_card = user.iduser WHERE loaning.id_card = ?', iduser, (err, result) => {
+            connection.query('SELECT loaning.loaningid, book.bookid, book.title, book.image, user.id_card, user.name, loaning.expired_date, loaning.forfeit, loaning.isverify, loaning.created_at, loaning.updated_at FROM loaning INNER JOIN book ON loaning.bookid = book.bookid INNER JOIN user ON loaning.id_card = user.iduser WHERE loaning.id_card = ?', iduser, (err, result) => {
                 if (!err) {
                     resolve(result)
                 } else {

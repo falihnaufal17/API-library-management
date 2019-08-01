@@ -86,7 +86,7 @@ module.exports = {
                             email: dataUser.email,
                             status: dataUser.status,
                             role: dataUser.namerole
-                        }, 'libraryku', { expiresIn: '30m' })
+                        }, process.env.SECRET_KEY || 'libraryku', { expiresIn: '30m' })
                         const token = dataUser.token
                         delete dataUser.salt
                         delete dataUser.password

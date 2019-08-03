@@ -130,10 +130,10 @@ module.exports = {
 
     updateBook: (req, res) => {
         const bookid = req.params.bookid;
+
         const data = {
             title: req.body.title,
             writer: req.body.writer,
-            image: req.body.image,
             description: req.body.description,
             locationid: req.body.locationid,
             categoryid: req.body.categoryid,

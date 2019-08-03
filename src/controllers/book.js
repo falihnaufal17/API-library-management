@@ -1,6 +1,21 @@
 const bookModel = require('../models/book')
 const miscHelper = require('../helpers/helpers')
 
+const multer = require('multer')
+const path = require('path')
+// let storage = multer.diskStorage({
+//     destination: function (req, file, callback) {
+//         callback(null, './uploads')
+//         console.log("masuk 2");
+//     },
+
+//     filename: function (req, file, callback) {
+//         console.log("masuk 1");
+//         callback(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname))
+//     }
+// })
+// let upload = multer({ storage: storage, limits: { fileSize: 100000000 } });
+
 module.exports = {
 
     getBookByStatus: (req, res) => {
@@ -70,11 +85,14 @@ module.exports = {
             })
     },
 
-    addBook: (req, res) => {
+    addBook: async (req, res) => {
+        let filename = "/images/" + req.file.filename
+        console.log("FILENYA: ", filename)
+
         const data = {
             title: req.body.title,
             writer: req.body.writer,
-            image: req.body.image,
+            image: filename,
             description: req.body.description,
             locationid: req.body.locationid,
             categoryid: req.body.categoryid,
@@ -87,9 +105,12 @@ module.exports = {
             .then(() => {
                 // const result = resultBook
                 miscHelper.response(res, data, 201)
+                console.log(res)
+                console.log(data)
             })
             .catch((error) => {
                 miscHelper.response(res, 'judul buku sudah ada!', 403, 'forbidden')
+                console.log(res)
                 console.log(error)
             })
     },

@@ -55,6 +55,7 @@ module.exports = {
     },
 
     addBook: (data) => {
+        console.log("datanya ", data)
         return new Promise((resolve, reject) => {
             connection.query('INSERT INTO book SET ?', data, (err, result) => {
                 if (!err) {

@@ -86,7 +86,7 @@ module.exports = {
     },
 
     addBook: async (req, res) => {
-        let filename = "/images/" + req.file.filename
+        let filename = 'images/' + req.file.filename
         console.log("FILENYA: ", filename)
 
         const data = {

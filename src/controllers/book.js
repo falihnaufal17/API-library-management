@@ -1,20 +1,6 @@
 const bookModel = require('../models/book')
 const miscHelper = require('../helpers/helpers')
-
-const multer = require('multer')
-const path = require('path')
-// let storage = multer.diskStorage({
-//     destination: function (req, file, callback) {
-//         callback(null, './uploads')
-//         console.log("masuk 2");
-//     },
-
-//     filename: function (req, file, callback) {
-//         console.log("masuk 1");
-//         callback(null, file.fieldname + '-' + Date.now() + path.extname(file.originalname))
-//     }
-// })
-// let upload = multer({ storage: storage, limits: { fileSize: 100000000 } });
+const cloudinary = require('cloudinary')
 
 module.exports = {
 
@@ -86,13 +72,30 @@ module.exports = {
     },
 
     addBook: async (req, res) => {
+        let path = req.file.path
+        let geturl = async (req) =>{
+            cloudinary.config({
+                cloud_name: 'dnqtceffv',
+                api_key: '796497613444653',
+                api_secret: 'We2TAGrwko6E8C4t3Uemrm9kbeA'
+            })
+
+            let data
+            await cloudinary.uploader.upload(path, (result)=>{
+                const fs = require('fs')
+                fs.unlinkSync(path)
+                data = result.url
+            })
+
+            return data
+        }
         let filename = 'images/' + req.file.filename
         console.log("FILENYA: ", filename)
 
         const data = {
             title: req.body.title,
             writer: req.body.writer,
-            image: filename,
+            image: await geturl(),
             description: req.body.description,
             locationid: req.body.locationid,
             categoryid: req.body.categoryid,

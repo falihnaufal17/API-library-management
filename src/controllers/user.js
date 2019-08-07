@@ -104,6 +104,7 @@ module.exports = {
                         dataUser.token = jwt.sign({
                             iduser: dataUser.iduser,
                             name: dataUser.name,
+                            image: dataUser.image,
                             email: dataUser.email,
                             status: dataUser.status,
                             role: dataUser.namerole

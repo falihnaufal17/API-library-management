@@ -41,7 +41,7 @@ module.exports = {
         return new Promise((resolve, reject) => {
             connection.query('UPDATE user SET status = 1 WHERE email =?', email, (err, result) => {
                 if (!err) {
-                    connection.query('SELECT user.iduser, user.iduser, user.id_card, user.name, user.email, user.password, user.salt, user.token, user.status, role.namerole, user.isverify, user.created_at, user.updated_at FROM user INNER JOIN role ON user.idrole = role.idrole WHERE email = ?', email, (errUpdate, resultUpdate) => {
+                    connection.query('SELECT user.iduser, user.iduser, user.id_card, user.name, user.email, user.image, user.password, user.salt, user.token, user.status, role.namerole, user.isverify, user.created_at, user.updated_at FROM user INNER JOIN role ON user.idrole = role.idrole WHERE email = ?', email, (errUpdate, resultUpdate) => {
                         if (!errUpdate) {
                             console.log(resultUpdate)
                             resolve(resultUpdate)

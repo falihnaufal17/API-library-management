@@ -93,5 +93,17 @@ module.exports = {
                 }
             })
         })
+    },
+
+    updateUser: (iduser, data) => {
+        return new Promise((resolve, reject) => {
+            connection.query(`UPDATE user SET ? WHERE iduser = ?`, [data, iduser], (err, result) => {
+                if (!err) {
+                    resolve(result)
+                } else {
+                    reject(err)
+                }
+            })
+        })
     }
 }

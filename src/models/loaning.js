@@ -3,7 +3,7 @@ const connection = require('../configs/db')
 module.exports = {
     getloaning: () => {
         return new Promise((resolve, reject) => {
-            connection.query('SELECT loaning.loaningid, book.bookid, book.title, user.id_card, user.name, loaning.expired_date, loaning.forfeit, loaning.isverify, loaning.created_at, loaning.updated_at FROM loaning INNER JOIN book ON loaning.bookid = book.bookid INNER JOIN user ON loaning.id_card = user.iduser', (err, result) => {
+            connection.query('SELECT loaning.loaningid, book.bookid, book.title, user.id_card, user.name, loaning.expired_date, loaning.forfeit, loaning.isverify, loaning.created_at, loaning.updated_at FROM loaning INNER JOIN book ON loaning.bookid = book.bookid INNER JOIN user ON loaning.id_card = user.iduser ORDER BY created_at DESC', (err, result) => {
                 if (!err) {
                     resolve(result)
                 } else {

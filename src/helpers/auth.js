@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken')
 const miscHelper = require('./helpers')
 
-const allowedAccess = process.env.REQUEST_HEADERS
+const allowedAccess = process.env.REQUEST_HEADERS || 'x-control-app'
 
 module.exports = {
     authInfo: (req, res, next) => {
@@ -22,7 +22,7 @@ module.exports = {
     },
 
     accessToken: (req, res, next) => {
-        const secretKey = process.env.SECRET_KEY
+        const secretKey = process.env.SECRET_KEY || 'libraryku'
         const accessToken = req.token
         const userToken = req.headers['x-control-user']
 

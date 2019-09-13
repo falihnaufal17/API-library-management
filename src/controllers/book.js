@@ -1,5 +1,6 @@
 const bookModel = require('../models/book')
 const miscHelper = require('../helpers/helpers')
+const cloudinary = require('cloudinary')
 
 module.exports = {
 
@@ -70,11 +71,31 @@ module.exports = {
             })
     },
 
-    addBook: (req, res) => {
+    addBook: async (req, res) => {
+        let path = req.file.path
+        let geturl = async (req) =>{
+            cloudinary.config({
+                cloud_name: 'dnqtceffv',
+                api_key: '796497613444653',
+                api_secret: 'We2TAGrwko6E8C4t3Uemrm9kbeA'
+            })
+
+            let data
+            await cloudinary.uploader.upload(path, (result)=>{
+                const fs = require('fs')
+                fs.unlinkSync(path)
+                data = result.url
+            })
+
+            return data
+        }
+        let filename = 'images/' + req.file.filename
+        console.log("FILENYA: ", filename)
+
         const data = {
             title: req.body.title,
             writer: req.body.writer,
-            image: req.body.image,
+            image: await geturl(),
             description: req.body.description,
             locationid: req.body.locationid,
             categoryid: req.body.categoryid,
@@ -87,9 +108,12 @@ module.exports = {
             .then(() => {
                 // const result = resultBook
                 miscHelper.response(res, data, 201)
+                console.log(res)
+                console.log(data)
             })
             .catch((error) => {
                 miscHelper.response(res, 'judul buku sudah ada!', 403, 'forbidden')
+                console.log(res)
                 console.log(error)
             })
     },
@@ -109,10 +133,10 @@ module.exports = {
 
     updateBook: (req, res) => {
         const bookid = req.params.bookid;
+
         const data = {
             title: req.body.title,
             writer: req.body.writer,
-            image: req.body.image,
             description: req.body.description,
             locationid: req.body.locationid,
             categoryid: req.body.categoryid,

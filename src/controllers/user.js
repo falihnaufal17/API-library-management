@@ -1,6 +1,6 @@
 const userModels = require('../models/user')
 const miscHelper = require('../helpers/helpers')
-
+const cloudinary = require('cloudinary')
 const jwt = require('jsonwebtoken')
 
 module.exports = {
@@ -38,15 +38,36 @@ module.exports = {
             })
     },
 
-    register: (req, res) => {
+    register: async (req, res) => {
         const salt = miscHelper.generateSalt(18)
         const passwordHash = miscHelper.setPassword(req.body.password, salt)
+
+        let path = req.file.path
+        let geturl = async (req) => {
+            cloudinary.config({
+                cloud_name: 'dnqtceffv',
+                api_key: '796497613444653',
+                api_secret: 'We2TAGrwko6E8C4t3Uemrm9kbeA'
+            })
+
+            let data
+            await cloudinary.uploader.upload(path, (result) => {
+                const fs = require('fs')
+                fs.unlinkSync(path)
+                data = result.url
+            })
+
+            return data
+        }
+        let filename = 'images/' + req.file.filename
+        console.log("FILENYA: ", filename)
 
         const data = {
             id_card: req.body.id_card,
             name: req.body.name,
             email: req.body.email,
             password: passwordHash.passwordHash,
+            image: await geturl(),
             salt: passwordHash.salt,
             token: '',
             status: 0,
@@ -83,10 +104,11 @@ module.exports = {
                         dataUser.token = jwt.sign({
                             iduser: dataUser.iduser,
                             name: dataUser.name,
+                            image: dataUser.image,
                             email: dataUser.email,
                             status: dataUser.status,
                             role: dataUser.namerole
-                        }, process.env.SECRET_KEY, { expiresIn: '30m' })
+                        }, process.env.SECRET_KEY || 'libraryku', { expiresIn: '30m' })
                         const token = dataUser.token
                         delete dataUser.salt
                         delete dataUser.password
@@ -135,5 +157,49 @@ module.exports = {
             .catch((error) => {
                 console.log(error)
             })
+    },
+
+    updateUser: async (req, res) => {
+        const iduser = req.params.iduser
+        let path = req.file.path
+        let geturl = async (req) => {
+            cloudinary.config({
+                cloud_name: 'dnqtceffv',
+                api_key: '796497613444653',
+                api_secret: 'We2TAGrwko6E8C4t3Uemrm9kbeA'
+            })
+
+            let data
+            await cloudinary.uploader.upload(path, (result) => {
+                const fs = require('fs')
+                fs.unlinkSync(path)
+                data = result.url
+            })
+
+            return data
+        }
+        let filename = 'images/' + req.file.filename
+        console.log("FILENYA: ", filename)
+
+        const data = {
+            id_card: req.body.id_card,
+            name: req.body.name,
+            email: req.body.email,
+            image: await geturl(),
+            updated_at: new Date()
+        }
+
+        userModels.updateUser(iduser, data)
+            .then(() => {
+                miscHelper.response(res, data, 200)
+                console.log(res)
+                console.log(data)
+            })
+            .catch((error) => {
+                miscHelper.response(res, 'Oops something wrong with server :(')
+                console.log(res)
+                console.log(error)
+            })
+
     }
 }

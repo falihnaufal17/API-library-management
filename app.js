@@ -3,7 +3,7 @@ require('dotenv/config');
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
-const cors = require('cors')
+// const cors = require('cors')
 const xssFilter = require('x-xss-protection')
 const logger = require('morgan')
 const path = require('path')
@@ -35,7 +35,7 @@ app.listen(port, () => {
 //     }
 // }
 
-app.use(cors())
+// app.use(cors())
 // app.options('*', cors(corsOptions))
 app.use(xssFilter())
 app.use(logger('dev'))

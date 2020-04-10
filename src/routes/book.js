@@ -19,12 +19,12 @@ let storage = multer.diskStorage({
 let upload = multer({ storage: storage, limits: { fileSize: 100000000 } })
 
 Route
-    .all('/*', Auth.authInfo)
+    .all('/*')
     .get('/', bookController.findBooks, bookController.getBooks)
     .get('/bookstatus', bookController.getBookByStatus)
     .get('/:bookid', bookController.bookDetail)
     .post('/', upload.single('image'), bookController.addBook)
-    .delete('/:bookid', Auth.accessToken, bookController.deleteBook)
-    .patch('/:bookid', Auth.accessToken, bookController.updateBook)
+    .delete('/:bookid', bookController.deleteBook)
+    .patch('/:bookid', bookController.updateBook)
 
 module.exports = Route;
